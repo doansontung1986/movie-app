@@ -148,6 +148,89 @@ img {
     opacity: 1;
 }
 
+#movie-detail-cover {
+    color: #fff;
+}
+
+#blog-detail {
+    color: #fff;
+}
+
+/*  comment */
+.comment-movie {
+    color: #ffffff;
+}
+
+.input-comment input{
+    border: none;
+    height: 35px;
+    border-radius: 50px;
+    background-color: #E5E5E5;
+}
+.input-comment input:focus {
+    border: none;
+    background-color: #E5E5E5;
+    box-shadow: none;
+    outline: none;
+}
+.cancel-comment button{
+    border: none;
+    border-radius: 5px;
+}
+.avatar-user img{
+    object-fit: cover;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* tin tức ---------------- */
+.featured-news a img-first-blog{
+    object-fit: cover;
+    height: 250px;
+}
+.image-news-list img{
+    object-fit: cover;
+    height: 80px;
+}
+.update-review a {
+    font-size: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.delete-review a {
+    font-size: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#rating-value {
+    color: black;
+}
+
+.rating {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.rating .star {
+    display: inline-block;
+    color: black;
+}
+
+.rating .star:hover,
+.rating .star.active {
+    color: gold;
+}
+.modal-body input::placeholder {
+    padding-left: 10px; /* Điều chỉnh khoảng cách từ đỉnh input */
+}
+
+.modal-body input{
+    height: 100px;
+    border-radius: 10px;
+}
+
 /* FOOTER */
 footer {
     margin-top: 30px;

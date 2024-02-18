@@ -102,4 +102,11 @@ public class MovieController {
         model.addAttribute("currentPage", page);
         return "web/danh-sach-bai-viet";
     }
+
+    @GetMapping("/danh-sach-bai-viet/{id}/{slug}")
+    public String getBlogDetails(@PathVariable Integer id, @PathVariable String slug, Model model) {
+        Blog blog = blogService.getBlog(id, slug, true);
+        model.addAttribute("blog", blog);
+        return "web/chi-tiet-bai-viet";
+    }
 }

@@ -1,15 +1,12 @@
 package vn.techmaster.movie.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vn.techmaster.movie.entity.Blog;
 import vn.techmaster.movie.repository.BlogRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +21,7 @@ public class BlogService {
     }
 
     // Lấy danh sách blog theo id
-    public List<Blog> getBlogsById(Integer id) {
-        return blogRepository.findByIdOrderByPublishedAtDesc(id);
+    public Blog getBlog(Integer id, String slug, Boolean status) {
+        return blogRepository.findByIdAndSlugAndStatus(id, slug, status).orElse(null);
     }
 }

@@ -56,90 +56,121 @@
 </head>
 <body>
     <header class="container-fluid">
-    <nav class="movieNavbar navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">
-            <img
-                    src="/images/logo.svg"
-                    alt="MovieStar Logo" />
-        </a>
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#movieNav"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="movieNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Trang Chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/danh-sach-phim-le">Phim Lẻ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/danh-sach-phim-chieu-rap">Phim Chiếu Rạp</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/danh-sach-phim-bo">Phim Bộ</a>
-                </li>
-            </ul>
+        <nav class="movieNavbar navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+                <img
+                        src="/images/logo.svg"
+                        alt="MovieStar Logo" />
+            </a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#movieNav"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="movieNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-le">Phim Lẻ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-chieu-rap">Phim Chiếu Rạp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-bo">Phim Bộ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-bai-viet">Bài Viết</a>
+                    </li>
+                </ul>
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa-regular fa-user mx-3"></i>
-                        Đăng Nhập</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-user-plus mx-3"></i>
-                        Đăng Ký</a
-                    >
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-regular fa-user mx-3"></i>
+                            Đăng Nhập</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-user-plus mx-3"></i>
+                            Đăng Ký</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
     <section class="py-4" id="movie-detail-cover">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="movie-item">
-                        <div class="movie-poster">
-                            <img th:src="${movie.poster}" src="./assets/images/image-cover.jpg" alt="image cover"/>
+                <div class="col-4 px-4">
+                    <img class="poster-movie-detail rounded overflow-hidden w-100" th:src="${movie.poster}" alt="">
+                </div>
+                <div class="col-7">
+                    <div class="row">
+                        <h4 th:text="${movie.title}"></h4>
+                    </div>
+                    <div class="infomation-detail-movie p-2">
+                        <div class="row p-2">
+                            <div class="col-3">Thể Loại</div>
+                            <div class="col-8">
+                                <div class="property-movie w-100">
+                                    <span><th:block th:text="${movie.getType().value}"></th:block></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-3">Năm sản Xuất</div>
+                            <div class="col-8">
+                                <div class="property-movie w-100">
+                                    <span><th:block th:text="${movie.releaseYear}"></th:block></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-3">Đạo Diễn</div>
+                            <div class="col-8">
+                                <div class="property-movie w-100" >
+                                        <span th:each="director : ${movie.directors}"> <th:block th:text="${director.getName()}"></th:block>,
+                                        </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-3">Diễn Viên</div>
+                            <div class="col-8">
+                                <div class="property-movie w-100" >
+                                    <span th:each="actor : ${movie.actors}"> <th:block th:text="${actor.getName()}"></th:block>,</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-2">
+                            <div class="col-3">Mô Tả</div>
+                            <div class="col-8">
+                                <div class="property-movie w-100">
+                                    <span><th:block th:text="${movie.description}"></th:block></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <h2 th:text="${movie.title}">Khắc Tinh Ma Cà Rồng</h2>
-                    <div class="movie-info">
-                        <p>
-                            Thể loại:
-                            <a href="#">Phim hành động</a>
-                        </p>
-                        <p th:text="${movie.releaseYear}">Năm phát hành: 2004</p>
-                    </div>
-                    <div class="movie-description">
-                        <p th:text="${movie.description}">
-                            Năm 1887 ở Transylvania, Tiến sĩ Victor Frankenstein với sự giúp
-                            đỡ của trợ lý Igor và Bá tước Dracula thành công tạo ra một quái
-                            nhân từ các phần của các thi thể. Ma cà rồng Dracula đã giết
-                            Frankenstein để sử dụng gã quái nhân cho kế hoạch của riêng hắn.
-                            Khi dân làng giận dữ xông vào Lâu đài Frankenstein, gã quái nhân
-                            đã mang theo xác Frankenstein chạy đến cối xay gió. Dân làng đốt
-                            cối xay gió và ngọn lửa có vẻ như đã giết chết quái nhân. Một
-                            năm sau, thợ săn quái vật Van Helsing giết Mr. Hyde trong Nhà
-                            thờ Đức Bà Paris. Van Helsing săn đuổi ác quỷ nhân danh Thánh
-                            Hội, một tổ chức bảo vệ loài người từ "thuở bình minh loài
-                            người"... <a href="#">Xem thêm</a>
-                        </p>
+                    <div class="row py-2" >
+                        <div class="rating">
+                            <span th:text="|Bộ phim hiện có ${reviewList.size()} đánh giá|"></span>
+                            <div>
+                                <span> <th:block th:text="|${movie.rating}/10|"></th:block><i class="fa-solid fa-star" style="color: #FFD43B;"></i></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -147,7 +178,7 @@
     </section>
 
     <section class="py-4">
-        <div class="container mb-3">
+        <div class="container-fluid mb-3">
             <div class="embed-responsive embed-responsive-16by9">
                 <!-- Replace the URL in the src attribute with the embed URL of your video -->
                 <iframe
@@ -161,7 +192,139 @@
         </div>
     </section>
 
-    <footer class="bg-dark py-4 text-white container-fuild">
+    <!-- comment -->
+    <section class="comment-movie">
+        <div class="container">
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-7">
+                    <div class="row">
+                        <div class="d-flex justify-content-between ">
+                            <h4>Bình Luận</h4>
+                            <!--                        <a href="" class="text-decoration-none text-reset pt-1">Hiển thị tất cả bình luận</a>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--                    <div class="input-comment px-3 pb-2">-->
+                        <!--                        <label>-->
+                        <!--                            <input class="w-100 rounded overflow-hidden my-2" type="text" placeholder="Viết bình luận . . . .">-->
+                        <!--                        </label>-->
+                        <!--                    </div>-->
+                        <div class="cancel-comment d-flex justify-content-end">
+                            <!--                        <button style="background-color:#F0F0F0" type="button" class="mx-2">Hủy</button>-->
+                            <!-- Button trigger modal -->
+                            <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Viết đánh giá
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Đánh giá bộ phim</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="rating d-flex justify-content-center">
+                                            <span class="star px-1" data-rating="1">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="2">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="3">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="4">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="5">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="6">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="7">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="8">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="9">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                                <span class="star  px-1" data-rating="10">
+                                                  <i class="fa-solid fa-star"></i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex justify-content-center" id="rating-value"></div>
+                                        <div class="modal-body">
+                                            <input id="comment" class="w-100 rounded overflow-hidden  my-2" type="text" placeholder="Viết bình luận . . . .">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <button id="submitCreateReview" type="button" class="btn btn-primary" data-bs-dismiss="modal">Gửi Đánh Giá</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row " th:each="review : ${reviewList}">
+                        <div class="col-1">
+                            <div class="avatar-user ">
+                                <img class="w-100" th:src="${review.user.avatar}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="content-comment">
+                                <h6><th:block th:text="${review.user.name}"></th:block></h6>
+                                <span th:each="star : ${#numbers.sequence(1, review.rating)}" class="star">
+                                 <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                            </span>
+                                <p class="mb-6"><th:block th:text="${review.comment}"></th:block></p>
+                                <span><th:block th:text="${review.updatedAt}"></th:block></span>
+                                <span class="update-review">
+                                <a class="text-reset text-decoration-none" href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Chỉnh sửa</a>
+                            </span>
+                                <span class="delete-review">
+                                <a class="text-reset text-decoration-none" href="" id="submitDeleteReview">Xóa</a>
+                            </span>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-3">
+                    <div class="row">
+                        <h5 class="ms-2">Phim Đề Xuất</h5>
+                    </div>
+                    <div class="recomment-movie mb-5" th:each="movie: ${relatedMovieList}">
+                        <div class="row">
+                            <a class="text-reset text-decoration-none d-flex" th:href="@{/phim/{id}/{slug} (id=${movie.id},slug=${movie.slug}) }">
+                                <div class="col-5">
+                                    <div class="image-movie ms-1 my-1 ">
+                                        <img class="rounded overflow-hidden w-100" th:src="${movie.poster}" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="title-movie ms-2">
+                                        <h6 th:text="${movie.title}"></h6>
+                                        <span > <th:block th:text="${movie.rating}"></th:block><i class="fa-solid fa-star" style="color: #FFD43B;"></i></span>
+                                        <p><th:block th:text="${movie.releaseYear}"></th:block></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark py-4 text-white container-fluid">
         <div class="row">
             <div class="col-md-4">
                 <img src="./assets/images/logo.svg" alt="" class="logo px-3" />
@@ -263,5 +426,7 @@
             });
         });
     </script>
+
+    <script th:src="@{/web/js/main.js}"></script>
 </body>
 </html>

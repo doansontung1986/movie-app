@@ -34,7 +34,7 @@ class MovieAppApplicationTests {
         Slugify slugify = Slugify.builder().build();
         Random random = new Random();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             String title = faker.book().title();
             boolean status = faker.bool().bool();
             Date createAt = faker.date().birthday();

@@ -43,7 +43,7 @@ public class InitDataTests {
     void saveGenres() {
         Faker faker = new Faker();
         Slugify slugify = Slugify.builder().build();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 30; i++) {
             String name = faker.funnyName().name();
             Genre genre = Genre.builder().name(name).slug(slugify.slugify(name)).build();
             genreRepository.save(genre);
@@ -180,7 +180,7 @@ public class InitDataTests {
         List<Actor> actorList = actorRepository.findAll();
         List<Director> directorList = directorRepository.findAll();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 300; i++) {
             // Lấy ngẫu nhiên danh sách 1 -> 3 thể loại
             List<Genre> rdGenreList = new ArrayList<>();
             for (int j = 0; j < rd.nextInt(3) + 1; j++) {
