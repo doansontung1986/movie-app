@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trang Chủ</title>
+
+    <!-- FONT GOOGLE -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- BS4 CSS -->
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+    />
+
+    <!-- Owl Carousel -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+            integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+            integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/web/css/style.css" />
+</head>
+<body>
+    <header class="container-fluid">
+        <nav class="movieNavbar navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">
+                <img
+                        src="/images/logo.svg"
+                        alt="MovieStar Logo" />
+            </a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#movieNav"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="movieNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Trang Chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-le">Phim Lẻ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-chieu-rap">Phim Chiếu Rạp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-phim-bo">Phim Bộ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/danh-sach-bai-viet">Bài Viết</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-regular fa-user mx-3"></i>
+                            Đăng Nhập</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-user-plus mx-3"></i>
+                            Đăng Ký</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="container-fluid movieCarousel">
+        <div
+                id="movieCarousel"
+                class="carousel slide carousel-fade"
+                data-ride="carousel"
+        >
+            <ol class="carousel-indicators">
+                <li
+                        data-target="#movieCarousel"
+                        data-slide-to="0"
+                        class="active"
+                ></li>
+                <li data-target="#movieCarousel" data-slide-to="1"></li>
+                <li data-target="#movieCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img
+                            src="/images/hero-1.jpg"
+                            class="d-block w-100"
+                            alt="..."
+                    />
+                    <div class="container carousel-caption d-none d-md-block">
+                        <p>ACTION, ADVENTURE, FANTASY</p>
+                        <h2>End of the World: Part II</h2>
+                        <p>
+                            Claritas est etiam processus dynamicus, qui sequitur mutationem
+                            consuetudium lectorum. Mirum est notare quam littera gothica,
+                            quam nunc putamu.
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item" th:each="bannerMovie : ${bannerMovies}">
+                    <img
+                            th:src="${bannerMovie.poster}"
+                            class="d-block w-100"
+                            alt="..."
+                    />
+                    <div class="container carousel-caption d-none d-md-block">
+                        <p>ACTION, ADVENTURE, FANTASY</p>
+                        <h2 th:text="${bannerMovie.title}">End of the World: Part II</h2>
+                        <p th:text="${bannerMovie.description}">
+                            Claritas est etiam processus dynamicus, qui sequitur mutationem
+                            consuetudium lectorum. Mirum est notare quam littera gothica,
+                            quam nunc putamu.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <a
+                    class="carousel-control-prev"
+                    href="#movieCarousel"
+                    role="button"
+                    data-slide="prev"
+            >
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a
+                    class="carousel-control-next"
+                    href="#movieCarousel"
+                    role="button"
+                    data-slide="next"
+            >
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="py-4 container-fluid mx-3" id="hot-movie">
+        <h3>PHIM HOT</h3>
+        <div class="movie-list owl-carousel">
+            <div class="movie-item" th:each="hotMovie : ${hotMovieList}">
+                <a th:href="@{/{id}/{slug} (id=${hotMovie.id}, slug=${hotMovie.slug})}">
+                    <div class="movie-poster rounded overflow-hidden">
+                        <img
+                                class="w-100 h-100"
+                                th:src="${hotMovie.poster}"
+                                alt=""
+                        />
+                    </div>
+                    <p class="mt-2" th:text="${hotMovie.title}">Khắc Tinh Ma Cà Rồng</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="movieList container-fluid">
+        <h2>PHIM LẺ</h2>
+        <div class="movieList__content">
+            <div class="row">
+                <div class="col-md-2 col-6 my-3" th:each="singleMovie :${singleMovieList}">
+                    <div class="movieList__item">
+                        <a th:href="@{/{id}/{slug} (id=${singleMovie.id}, slug=${singleMovie.slug})}">
+                            <img
+                                    class="img-fluid"
+                                    th:src="${singleMovie.poster}"
+                                    alt=""
+                            />
+                            <div class="movieList__overlay"></div>
+                            <div class="movieList__detail">
+                                <div class="movieList__detail__circle"></div>
+                                <a href="#">Read More</a>
+                                <span th:text="${singleMovie.releaseYear}">2017</span>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="mt-2" th:text="${singleMovie.title}">Khắc Tinh Ma Cà Rồng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="movieList container-fluid">
+        <h2>PHIM BỘ</h2>
+        <div class="movieList__content">
+            <div class="row">
+                <div class="col-md-2 col-6 my-3" th:each="seriesMovie :${seriesMovieList}">
+                    <div class="movieList__item">
+                        <a th:href="@{/{id}/{slug} (id=${seriesMovie.id}, slug=${seriesMovie.slug})}">
+                            <img
+                                    class="img-fluid"
+                                    th:src="${seriesMovie.poster}"
+                                    alt=""
+                            />
+                            <div class="movieList__overlay"></div>
+                            <div class="movieList__detail">
+                                <div class="movieList__detail__circle"></div>
+                                <a href="#">Read More</a>
+                                <span th:text="${seriesMovie.releaseYear}">2017</span>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="mt-2" th:text="${seriesMovie.title}">Khắc Tinh Ma Cà Rồng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="movieList container-fluid">
+        <h2>PHIM CHIẾU RẠP</h2>
+        <div class="movieList__content">
+            <div class="row">
+                <div class="col-md-2 col-6 my-3" th:each="cinemaMovie :${cinemaMovieList}">
+                    <div class="movieList__item">
+                        <a th:href="@{/{id}/{slug} (id=${cinemaMovie.id}, slug=${cinemaMovie.slug})}">
+                            <img
+                                    class="img-fluid"
+                                    th:src="${cinemaMovie.poster}"
+                                    alt=""
+                            />
+                            <div class="movieList__overlay"></div>
+                            <div class="movieList__detail">
+                                <div class="movieList__detail__circle"></div>
+                                <a href="#">Read More</a>
+                                <span th:text="${cinemaMovie.releaseYear}">2017</span>
+                            </div>
+                        </a>
+                    </div>
+                    <a href="#" class="mt-2" th:text="${cinemaMovie.title}">Khắc Tinh Ma Cà Rồng</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark py-4 text-white container-fuild">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="/images/logo.svg" alt="" class="logo px-3" />
+                <p class="mt-2 px-3">
+                    <span>Movie Star</span> là website <i>xem phim online</i> với hơn
+                    10000 <span>phim hay</span> nhất chất lượng HD, phụ đề tiếng việt
+                    được cập nhật liên tục phim mới hàng ngày để phục vụ người xem.<br />
+                    Đến với HDViet, bạn sẽ có những phút giây thoải mái cùng những bộ
+                    <a href="#">phim hài</a>
+                    vui nhộn,
+                    <a href="#">phim hành động</a>
+                    đặc sắc... cũng như những bộ phim tâm lý tình cảm Hàn Quốc, Trung
+                    Quốc... Chúc bạn <span>xem phim</span> vui vẻ cùng HDViet.
+                </p>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-uppercase mb-3">Danh mục</h5>
+                <p>Tin tức</p>
+                <p>Phim chiếu rạp</p>
+                <p>Phim bộ</p>
+                <p>Phim lẻ</p>
+                <p>TV Show</p>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-uppercase mb-3">Thể loại</h5>
+                <p>Phim cổ trang</p>
+                <p>Phim đam mỹ</p>
+                <p>Phim bách hợp</p>
+                <p>Phim viễn tưởng</p>
+                <p>Phim hoạt hình</p>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-uppercase mb-3">Điều khoản</h5>
+                <p>DMCA</p>
+                <p>Liên hệ</p>
+                <p>Privacy</p>
+                <p>Terms of Service</p>
+            </div>
+
+            <div class="col-md-2">
+                <h5 class="text-uppercase mb-3">SOCIAL</h5>
+                <div class="d-flex">
+                    <p class="fs-4 me-3">
+                        <span><i class="fa-brands fa-facebook"></i></span>
+                    </p>
+                    <p class="fs-4 me-3 px-2">
+                        <span><i class="fa-brands fa-twitter"></i></span>
+                    </p>
+                    <p class="fs-4 me-2">
+                        <span><i class="fa-brands fa-youtube"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>© 2024 MovieStar. All rights reserved</p>
+        </div>
+    </footer>
+
+    <!-- BS4 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"
+    ></script>
+
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"
+    ></script>
+
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+            integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".movie-list").owlCarousel({
+                items: 4,
+                margin: 20,
+                loop: true,
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+/* GLOBAL */
+
+header,
+section,
+footer,
+aside,
+nav,
+main,
+article,
+figure {
+    display: block;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 80%;
+    font-family: "Roboto Condensed";
+    /* 1 rem = 18px */
+    /* không khai báo thì 1rem = 16px */
+    font-size: 18px;
+    background-color: black;
+    margin: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    display: block;
+}
+
+/* HEADER */
+.movieNavbar .navbar-nav {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.movieNavbar .navbar-nav .nav-item {
+    margin-right: 20px;
+    padding-left: 30px;
+}
+
+.movieNavbar .navbar-nav .nav-item::after {
+    content: "";
+    height: 3px;
+    width: 0;
+    background: linear-gradient(to right, #fbbd61, #ec7532);
+    display: block;
+    transition: 0.5s;
+    box-shadow: 0 0 20px 0 #fbbd61;
+}
+
+.movieNavbar .navbar-nav .nav-item:hover::after {
+    width: 100%;
+}
+
+/* CAROUSEL */
+#movieCarousel .carousel-inner .carousel-caption {
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+}
+
+#movieCarousel .carousel-indicators {
+    left: 50%;
+    bottom: 50px;
+    transform: translateX(-50%);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#movieCarousel .carousel-indicators li {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid white;
+    opacity: 1;
+    background-clip: border-box;
+}
+
+#movieCarousel .carousel-indicators li.active {
+    background-color: white;
+}
+
+/* HOT MOVIE */
+.movieList {
+    margin-top: 30px;
+}
+
+.movieList__item {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.movieList__overlay {
+    position: absolute;
+    top: 0;
+    left: calc(-165px - 250%);
+    width: 250%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, #fbbd61, #ec7532);
+    transform: skew(45deg);
+    transition: all 0.5s;
+}
+
+.movieList__item:hover .movieList__overlay {
+    left: -165px;
+}
+
+.movieList__item .movieList__detail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.movieList__item:hover .movieList__detail {
+    opacity: 1;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 30px;
+}
+
+.copyright {
+    text-align: center;
+    color: #bbe917;
+    padding-top: 20px;
+    font-size: 0.8rem;
+}
