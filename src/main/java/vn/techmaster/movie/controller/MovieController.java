@@ -33,7 +33,6 @@ public class MovieController {
         Page<Movie> pageDataSeriesMovie = movieService.getMoviesByType(MovieType.PHIM_BO, true, 1, 20);
         Page<Movie> pageDataCinemaMovie = movieService.getMoviesByType(MovieType.PHIM_CHIEU_RAP, true, 1, 20);
 
-        model.addAttribute("bannerMovies", pageDataBannerMovie.getContent());
         model.addAttribute("hotMovieList", pageDataHotMovie.getContent());
         model.addAttribute("singleMovieList", pageDataSingleMovie.getContent());
         model.addAttribute("seriesMovieList", pageDataSeriesMovie.getContent());
@@ -44,7 +43,7 @@ public class MovieController {
     // Danh sách phim chiếu rạp
     // /phim-chieu-rap?page=1&size=12 -> page = 1, size = 12
     // /phim-chieu-rap -> page = 1, size = 12
-    @GetMapping("/danh-sach-phim-le")
+    @GetMapping("/phim-le")
     public String getSingleMovies(Model model,
                                   @RequestParam(required = false, defaultValue = "1") Integer page,
                                   @RequestParam(required = false, defaultValue = "20") Integer size) {
@@ -53,10 +52,10 @@ public class MovieController {
         model.addAttribute("singleMovieList", pageData.getContent());
         model.addAttribute("pageData", pageData);
         model.addAttribute("currentPage", page);
-        return "web/danh-sach-phim-le";
+        return "web/phim-le";
     }
 
-    @GetMapping("/danh-sach-phim-bo")
+    @GetMapping("/phim-bo")
     public String getSeriesMovies(Model model,
                                   @RequestParam(required = false, defaultValue = "1") Integer page,
                                   @RequestParam(required = false, defaultValue = "20") Integer size) {
@@ -65,10 +64,10 @@ public class MovieController {
         model.addAttribute("seriesMovieList", pageData.getContent());
         model.addAttribute("pageData", pageData);
         model.addAttribute("currentPage", page);
-        return "web/danh-sach-phim-bo";
+        return "web/phim-bo";
     }
 
-    @GetMapping("/danh-sach-phim-chieu-rap")
+    @GetMapping("/phim-chieu-rap")
     public String getCinemaMovies(Model model,
                                   @RequestParam(required = false, defaultValue = "1") Integer page,
                                   @RequestParam(required = false, defaultValue = "20") Integer size) {
@@ -77,10 +76,10 @@ public class MovieController {
         model.addAttribute("cinemaMovieList", pageData.getContent());
         model.addAttribute("pageData", pageData);
         model.addAttribute("currentPage", page);
-        return "web/danh-sach-phim-chieu-rap";
+        return "web//phim-chieu-rap";
     }
 
-    @GetMapping("/{id}/{slug}")
+    @GetMapping("/phim/{id}/{slug}")
     public String getMovieById(@PathVariable Integer id, @PathVariable String slug, Model model) {
         Movie movie = movieService.getMovie(id, slug, true);
         List<Movie> relatedMovieList = movieService.getRelatedMovies(id, movie.getType(), true, 6);
@@ -108,5 +107,15 @@ public class MovieController {
         Blog blog = blogService.getBlog(id, slug, true);
         model.addAttribute("blog", blog);
         return "web/chi-tiet-bai-viet";
+    }
+
+    @GetMapping("/dang-nhap")
+    public String getLogin() {
+        return "web/dang-nhap";
+    }
+
+    @GetMapping("/dang-ky")
+    public String getSignUp() {
+        return "web/dang-ky";
     }
 }
