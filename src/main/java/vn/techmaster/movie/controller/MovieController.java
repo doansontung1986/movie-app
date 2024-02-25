@@ -27,7 +27,6 @@ public class MovieController {
 
     @GetMapping("/")
     public String getHome(Model model) {
-        Page<Movie> pageDataBannerMovie = movieService.getHotMovies(true, 1, 2);
         Page<Movie> pageDataHotMovie = movieService.getHotMovies(true, 1, 8);
         Page<Movie> pageDataSingleMovie = movieService.getMoviesByType(MovieType.PHIM_LE, true, 1, 20);
         Page<Movie> pageDataSeriesMovie = movieService.getMoviesByType(MovieType.PHIM_BO, true, 1, 20);
@@ -110,12 +109,12 @@ public class MovieController {
     }
 
     @GetMapping("/dang-nhap")
-    public String getLogin() {
-        return "web/dang-nhap";
+    public String getLoginPage() {
+        return "web/auth/login";
     }
 
     @GetMapping("/dang-ky")
-    public String getSignUp() {
-        return "web/dang-ky";
+    public String getRegisterPage() {
+        return "web/auth/register";
     }
 }
