@@ -14,12 +14,12 @@
                     <form class="p-5 rounded bg-body-tertiary" id="form-login">
                         <div class="mb-3 form-group">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="email" name="contentEmail" required>
                         </div>
                         <div class="form-group mb-3">
                             <label class="form-label">Mật khẩu</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password"/>
+                                <input type="password" class="form-control" id="password" name="contentPassword" required/>
                                 <span class="input-group-text icon-toggle-password">
                                     <i class="fa-regular fa-eye"></i>
                                 </span>
@@ -37,53 +37,7 @@
 </th:block>
 
 <th:block id="js">
-    <script>
-        // hide/show password with icon in inputs using valina javascript
-        const togglePasswordBtns = document.querySelectorAll('.icon-toggle-password');
-        const passwordInputs = document.querySelectorAll('input[type="password"]');
-        togglePasswordBtns.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                if (passwordInputs[index].type === 'password') {
-                    passwordInputs[index].type = 'text';
-                    btn.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-                } else {
-                    passwordInputs[index].type = 'password';
-                    btn.innerHTML = '<i class="fa-regular fa-eye"></i>';
-                }
-            });
-        });
-
-        // Xử lý login
-        const emailEl = document.getElementById('email');
-        const passwordEl = document.getElementById('password');
-        const formLogin = document.getElementById('form-login');
-
-        formLogin.addEventListener("submit", (e) => {
-            // Check validate
-            e.preventDefault();
-
-            const data = {
-                email: emailEl.value,
-                password: passwordEl.value
-            }
-
-            // Send data to server using axios
-            axios.post('/api/auth/login', data)
-                .then((response) => {
-                    if (response.status === 200) {
-                        toastr.success("Đăng nhập thành công");
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 1500);
-                    }
-                })
-                .catch((error) => {
-                    toastr.error("Tài khoản hoặc mật khẩu không đúng");
-                    console.log(error);
-                    console.log(error.response.data.message);
-                });
-        })
-    </script>
+    <script th:src="@{/web/js/login.js}"></script>
 </th:block>
 </body>
 </html>

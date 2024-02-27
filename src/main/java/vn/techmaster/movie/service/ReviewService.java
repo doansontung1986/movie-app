@@ -1,5 +1,6 @@
 package vn.techmaster.movie.service;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import vn.techmaster.movie.entity.Movie;
@@ -20,6 +21,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
+    private final HttpSession session;
 
     // Lấy danh sách review theo id phim
     public List<Review> getReviewsByMovie(Integer id) {
@@ -28,13 +30,8 @@ public class ReviewService {
 
     // Tạo review
     public Review createReview(UpsertReviewRequest request) {
-        // TODO: Fix userId = 1. Sau này user là user đang login
-        Integer userId = 1;
 
-        // Tìm kiếm user theo id
-        User user = userRepository
-                .findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user có id: " + userId));
+        User user = (User) session.getAttribute("currentUser");
 
         // Kiểm tra movieId có tồn tại không?
         Movie movie = movieRepository.findById(request.getMovieId())
@@ -53,13 +50,8 @@ public class ReviewService {
 
     // Cập nhật review
     public Review updateReview(Integer id, UpsertReviewRequest request) {
-        // TODO: Fix userId = 1. Sau này user là user đang login
-        Integer userId = 1;
 
-        // Tìm kiếm user theo id
-        User user = userRepository
-                .findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user có id: " + userId));
+        User user = (User) session.getAttribute("currentUser");
 
         // Kiểm tra movieId có tồn tại không?
         Movie movie = movieRepository.findById(request.getMovieId())
@@ -88,13 +80,8 @@ public class ReviewService {
 
     // Xóa review
     public void deleteReview(Integer id) {
-        // TODO: Fix userId = 1. Sau này user là user đang login
-        Integer userId = 1;
 
-        // Tìm kiếm user theo id
-        User user = userRepository
-                .findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy user có id: " + userId));
+        User user = (User) session.getAttribute("currentUser");
 
         // Kiểm tra review có tồn tại không?
         Review review = reviewRepository.findById(id)

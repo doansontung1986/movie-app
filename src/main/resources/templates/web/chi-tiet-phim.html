@@ -56,7 +56,8 @@
                         <a class="text-primary" th:case="*" href="#">Không xác định</a> <!-- Trường hợp mặc định -->
                     </a>
                 </li>
-                <li class="breadcrumb-item active text-primary" aria-current="page" th:text="${movie.title}">Đầu Gấu Đụng Đầu Đất
+                <li class="breadcrumb-item active text-primary" aria-current="page" th:text="${movie.title}">Đầu Gấu
+                    Đụng Đầu Đất
                 </li>
             </ol>
         </nav>
@@ -157,12 +158,18 @@
         <div>
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="mb-3">Bình luận</h3>
-                <button class="btn btn-primary" id="btn-open-modal-review">
-                    Viết đánh giá
-                </button>
+                <span th:classappend="${session.currentUser == null ? 'd-none' : 'd-inline-block'}">
+                    <button class="btn btn-primary" id="btn-open-modal-review">
+                        Viết đánh giá
+                    </button>
+                </span>
             </div>
-            <p>Vui lòng <a href="/dang-nhap" class="text-primary text-decoration-underline">đăng
-                nhập</a> để viết bình luận</p>
+
+            <th:block th:if="${session.currentUser == null}">
+                <p>Vui lòng <a href="/dang-nhap" class="text-primary text-decoration-underline">đăng
+                    nhập</a> để viết bình luận</p>
+            </th:block>
+
             <div class="review-list">
 
             </div>
@@ -306,13 +313,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
         integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="/web/js/main.js"></script>
+
 <script th:inline="javascript">
     const movie = [[${movie}]];
     let reviewList = [[${reviewList}]];
 
     console.log({movie, reviewList})
 </script>
+
 <script src="/web/js/movie-detail.js"></script>
 </body>
 </html>
