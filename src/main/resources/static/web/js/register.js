@@ -25,6 +25,10 @@ formRegister.addEventListener("submit", (e) => {
     // Check validate
     e.preventDefault();
 
+    if (!$('#form-register').valid()) {
+        return;
+    }
+
     if (passwordEl.value !== confirmPasswordEl.value) {
         errorMessage.innerText = "Mật khẩu và Nhập lại mật khẩu phải giống nhau";
     } else {

@@ -20,9 +20,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class MovieController {
-
     private final MovieService movieService;
-    private final BlogService blogService;
     private final ReviewService reviewService;
 
     @GetMapping("/")
@@ -88,24 +86,6 @@ public class MovieController {
         model.addAttribute("relatedMovieList", relatedMovieList);
         model.addAttribute("reviewList", reviewList);
         return "web/chi-tiet-phim";
-    }
-
-    @GetMapping("/danh-sach-bai-viet")
-    public String getBlog(Model model,
-                          @RequestParam(required = false, defaultValue = "1") Integer page,
-                          @RequestParam(required = false, defaultValue = "20") Integer size) {
-        Page<Blog> pageData = blogService.getAllBlogs(true, page, size);
-        model.addAttribute("blogList", pageData.getContent());
-        model.addAttribute("pageData", pageData);
-        model.addAttribute("currentPage", page);
-        return "web/danh-sach-bai-viet";
-    }
-
-    @GetMapping("/danh-sach-bai-viet/{id}/{slug}")
-    public String getBlogDetails(@PathVariable Integer id, @PathVariable String slug, Model model) {
-        Blog blog = blogService.getBlog(id, slug, true);
-        model.addAttribute("blog", blog);
-        return "web/chi-tiet-bai-viet";
     }
 
     @GetMapping("/dang-nhap")

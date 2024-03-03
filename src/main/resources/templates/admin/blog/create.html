@@ -3,14 +3,18 @@
       th:replace="~{admin/layout/blog-layout :: blog-layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
 
 <head>
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>Tạo bài viết mới</title>
 
     <th:block id="css">
-        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+              integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
         <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css"/>
         <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
+
     </th:block>
 </head>
 
@@ -28,7 +32,7 @@
                                 <a href="#">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#">Blog</a>
+                                <a th:href="@{/admin/blogs}" href="#">Blog</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 Tạo bài viết
@@ -47,7 +51,7 @@
                         <button type="button" class="btn btn-default">
                             <i class="fas fa-chevron-left"></i> Quay lại
                         </button>
-                        <button type="button" class="btn btn-info px-4">
+                        <button id="save" type="button" class="btn btn-info px-4">
                             Lưu
                         </button>
                         <button type="button" class="btn btn-primary px-4">
@@ -68,20 +72,22 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label>Tiêu đề</label>
-                                            <input type="text" class="form-control" id="title"/>
-                                        </div>
+                                        <form id="form-blog">
+                                            <div class="form-group">
+                                                <label>Tiêu đề</label>
+                                                <input type="text" class="form-control" id="title"/>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>Nội dung</label>
-                                            <textarea id="content"></textarea>
-                                        </div>
+                                            <div class="form-group">
+                                                <label>Nội dung</label>
+                                                <textarea id="content"></textarea>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label>Mô tả ngắn</label>
-                                            <textarea id="description" class="form-control" rows="3"></textarea>
-                                        </div>
+                                            <div class="form-group">
+                                                <label>Mô tả ngắn</label>
+                                                <textarea id="description" class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </form>
                                     </div>
 
                                     <div class="col-md-4">
@@ -175,6 +181,18 @@
 
     <script src="/admin-assets/plugins/select2/js/select2.full.min.js"></script>
 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+            integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+            integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         //Initialize Select2 Elements
         $(".select2").select2();
@@ -189,6 +207,10 @@
             },
         });
     </script>
+
+    <script th:src="@{/admin-assets/dist/js/admin-message.js}"></script>
+
+    <script th:src="@{/admin-assets/dist/js/admin-blog/create-blog.js}"></script>
 </th:block>
 
 </body>
