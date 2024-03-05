@@ -6,18 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title th:replace="${title}">Title</title>
 
-    <!-- Google Font: Source Sans Pro -->
+    <link rel="shortcut icon" href="/web/image/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/web/image/favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"/>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="/admin-assets/plugins/fontawesome-free/css/all.min.css"/>
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
-
-    <!-- Theme style -->
     <link rel="stylesheet" href="/admin-assets/dist/css/adminlte.min.css"/>
-    <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/admin-assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
     <th:block th:replace="${css}"></th:block>
 </head>
@@ -33,16 +32,19 @@
     <th:block th:replace="${content}"></th:block>
 </div>
 
-<!-- jQuery -->
 <script src="/admin-assets/plugins/jquery/jquery.min.js"></script>
-
-<!-- Bootstrap 4 -->
 <script src="/admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- overlayScrollbars -->
 <script src="/admin-assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
 <script src="/admin-assets/dist/js/adminlte.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+        integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="/admin-assets/dist/js/common.js"></script>
 
 <th:block th:replace="${js}"></th:block>
 </body>

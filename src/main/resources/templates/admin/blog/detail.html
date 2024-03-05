@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="~{admin/layout/blog-layout :: blog-layout(~{:: title}, ~{:: #css}, ~{:: #main-content}, ~{:: #js})}">
+      th:replace="~{admin/layout/blog-layout :: blog-layout(~{:: title}, ~{:: #css}, ~{:: .content-wrapper}, ~{:: #js})}">
 
 <head>
     <title>Chi tiết bài viết</title>
@@ -8,135 +8,127 @@
     <th:block id="css">
         <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
-
         <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css"/>
         <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
+
+        <style>
+            .modal-dialog {
+                max-width: 1000px;
+            }
+
+            .image-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 10px;
+            }
+
+            .image-item {
+                height: 150px;
+                border: 2px solid #eee;
+            }
+
+            .image-item.selected {
+                border-color: red !important;
+                border-width: 4px !important;
+            }
+
+            .image-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
     </th:block>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" id="main-content">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-12">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="#">Dashboard</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="#">Blog</a>
-                            </li>
-                            <li class="breadcrumb-item active" th:text="${blogAdminDetail.title}">
-                                Thực hành làm ứng dụng Meal Finder API
-                                với Javascript (Phần 2)
-                            </li>
-                        </ol>
-                    </div>
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-12">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Blog</a>
+                        </li>
+                        <li class="breadcrumb-item active" th:text="${blogAdminDetail.title}">
+                            Thực hành làm ứng dụng Meal Finder API
+                            với Javascript (Phần 2)
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row py-2">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-default">
-                            <i class="fas fa-chevron-left"></i> Quay lại
-                        </button>
-                        <button id="update" type="button" class="btn btn-info px-4">
-                            Lưu
-                        </button>
-                        <button type="button" class="btn btn-primary px-4">
-                            Preview
-                        </button>
-                    </div>
-
-                    <div class="col-6 d-flex justify-content-end">
-                        <button id="deleteBlog" type="button" class="btn btn-danger px-4">
-                            Xóa
-                        </button>
-                    </div>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row py-2">
+                <div class="col-6">
+                    <button type="button" class="btn btn-default">
+                        <i class="fas fa-chevron-left"></i> Quay lại
+                    </button>
+                    <button id="update" type="button" class="btn btn-info px-4">
+                        Lưu
+                    </button>
                 </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <form id="form-blog-detail">
-                                            <div class="form-group">
-                                                <label>Tiêu đề</label>
-                                                <input type="text" class="form-control" id="title"/>
-                                            </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <button id="deleteBlog" type="button" class="btn btn-danger px-4">
+                        Xóa
+                    </button>
+                </div>
+            </div>
 
-                                            <div class="form-group">
-                                                <label>Nội dung</label>
-                                                <textarea id="content"></textarea>
-                                            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <form id="form-blog-detail">
+                                        <div class="form-group">
+                                            <label>Tiêu đề</label>
+                                            <input type="text" class="form-control" id="title"/>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label>Mô tả ngắn</label>
-                                                <textarea id="description" class="form-control" rows="3"></textarea>
-                                            </div>
-                                        </form>
+                                        <div class="form-group">
+                                            <label>Nội dung</label>
+                                            <textarea id="content"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Mô tả ngắn</label>
+                                            <textarea id="description" class="form-control" rows="3"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Trạng thái</label>
+                                        <select id="status" class="form-control">
+                                            <option value="0">
+                                                Nháp
+                                            </option>
+                                            <option value="1">
+                                                Công khai
+                                            </option>
+                                        </select>
                                     </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Trạng thái</label>
-                                            <select id="status" class="form-control">
-                                                <option value="0">
-                                                    Nháp
-                                                </option>
-                                                <option value="1">
-                                                    Công khai
-                                                </option>
-                                            </select>
+                                    <div class="form-group">
+                                        <div class="thumbnail-preview-container mb-3">
+                                            <img src="" alt="" id="thumbnail"/>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Danh mục</label>
-                                            <div class="select2-purple">
-                                                <select class="select2 form-control" multiple="multiple"
-                                                        id="category">
-                                                    <option>
-                                                        Java
-                                                    </option>
-                                                    <option>
-                                                        Golang
-                                                    </option>
-                                                    <option>
-                                                        React
-                                                    </option>
-                                                    <option>
-                                                        Lập trình web
-                                                    </option>
-                                                    <option>
-                                                        Database
-                                                    </option>
-                                                    <option>
-                                                        Tips Trick
-                                                    </option>
-                                                    <option>
-                                                        Devops
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="thumbnail-preview-container mb-3">
-                                                <img src="" alt="" id="thumbnail"/>
-                                            </div>
-                                            <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
-                                                    data-target="#modal-xl">
-                                                Chọn hình ảnh
-                                            </button>
-                                        </div>
+                                        <button type="button" class="btn btn-info btn-flat" data-toggle="modal"
+                                                data-target="#modal-xl">
+                                            Chọn hình ảnh
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -144,55 +136,83 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <div class="modal fade" id="modal-xl" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Extra Large Modal</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
+    <div class="modal fade" id="modal-xl" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Danh sách ảnh</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button class="btn btn-success" id="btn-chose-image" disabled>Chọn ảnh</button>
+
+                            <label for="avatar" class="btn btn-warning mb-0">Upload ảnh</label>
+                            <input type="file" id="avatar" class="d-none">
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" id="btn-delete-image" disabled>Xóa ảnh</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <p>One fine body…</p>
+                    <!-- Hiển thị danh sách ảnh -->
+                    <div class="image-container mt-4 mb-4">
+                        <div class="image-item">
+                            <img src="https://images.unsplash.com/photo-1656918931725-2f9d9fce4acb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=800&q=60"
+                                 alt="">
+                        </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="button" class="btn btn-primary">
-                            Save changes
-                        </button>
+
+                    <!-- Hiển thị phần phân trang -->
+                    <div class="pagination-container d-flex justify-content-center" th:if="${pageData.getTotalPages() > 1}">
+                        <nav aria-label="...">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${currentPage - 1})}">Previous</a>
+                                </li>
+
+                                <li class="page-item"
+                                    th:each="pageNumber : ${#numbers.sequence(1, pageData.getTotalPages())}"
+                                    th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${pageNumber})}"
+                                       th:text="${pageNumber}"></a>
+                                </li>
+
+                                <li class="page-item"
+                                    th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
+                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${currentPage + 1})}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 <th:block id="js">
-    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
     <script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
     <script src="/admin-assets/plugins/select2/js/select2.full.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-            integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-            integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script th:inline="javascript">
         const currentBlog = [[${blogAdminDetail}]]
-    </script>
 
-    <script>
+        let imageList = [[${images}]];
+        console.log(imageList);
+
         //Initialize Select2 Elements
         $(".select2").select2();
 
@@ -205,6 +225,100 @@
                 codeSyntaxHighlighting: true,
             },
         });
+
+        // Quản lý ảnh
+        const imageContainerEl = document.querySelector('.image-container');
+        const btnChoseImage = document.getElementById('btn-chose-image');
+        const btnDeleteImage = document.getElementById('btn-delete-image');
+        const inputImageEl = document.getElementById('avatar');
+        const thumbnailPreviewEl = document.getElementById('thumbnail');
+
+        // Hiển thị danh sách ảnh
+        const renderImages = images => {
+            let html = "";
+
+            images.forEach(image => {
+                html += `
+                <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
+                    <img src="${image.url}" alt="">
+                </div>
+            `;
+            });
+            imageContainerEl.innerHTML = html;
+        };
+
+        // Upload ảnh
+        inputImageEl.addEventListener("change", (e) => {
+            // Lấy ra thông tin của file upload
+            const file = e.target.files[0];
+
+            // Tạo đối tượng formData
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Call api sử dụng axios
+            axios.post("/api/admin/images", formData)
+                .then(res => {
+                    imageList.unshift(res.data);
+                    renderImages(imageList);
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error(err.response.data.message);
+                })
+        })
+
+        const choseImage = el => {
+            const selectedEl = document.querySelector(".image-item.selected");
+            if (selectedEl) {
+                selectedEl.classList.remove("selected");
+            }
+
+            el.classList.add("selected");
+            btnChoseImage.disabled = false;
+            btnDeleteImage.disabled = false;
+        }
+
+        // Chọn ảnh
+        btnChoseImage.addEventListener("click", () => {
+            const selectedEl = document.querySelector(".image-item.selected");
+            if (!selectedEl) {
+                toastr.warning("Vui lòng chọn ảnh");
+                return;
+            }
+
+            const imageUrl = selectedEl.querySelector("img").getAttribute("src");
+            thumbnailPreviewEl.src = imageUrl;
+
+            $('#modal-image').modal('hide');
+        })
+
+        // Xóa ảnh
+        btnDeleteImage.addEventListener("click", () => {
+            const selectedEl = document.querySelector(".image-item.selected");
+            if (!selectedEl) {
+                toastr.warning("Vui lòng chọn ảnh cần xóa");
+                return;
+            }
+
+            const imageId = selectedEl.dataset.id;
+            axios.delete(`/api/admin/images/${imageId}`)
+                .then(res => {
+                    imageList = imageList.filter(image => image.id !== imageId);
+                    renderImages(imageList);
+
+                    btnChoseImage.disabled = true;
+                    btnDeleteImage.disabled = true;
+
+                    toastr.success("Xoá ảnh thành công");
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error(err.response.data.message);
+                })
+        })
+
+        renderImages(imageList);
     </script>
 
     <script th:src="@{/admin-assets/dist/js/admin-message.js}"></script>

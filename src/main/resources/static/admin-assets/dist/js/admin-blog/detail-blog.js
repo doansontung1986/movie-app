@@ -4,6 +4,7 @@ let contentEl = document.getElementById("content");
 let statusBlogEl = document.getElementById("status");
 const updateBlog = document.getElementById("update");
 const deleteBlog = document.getElementById("deleteBlog");
+const thumbnailPreviewEl = document.getElementById('thumbnail');
 
 const renderBlog = () => {
     // console.log(currentBlog)
@@ -34,7 +35,8 @@ updateBlog.addEventListener('click', (e) => {
         title: titleEl.value,
         description: titleEl.value,
         content: contentEl.value,
-        status: status
+        status: status,
+        thumbnail: thumbnailPreviewEl.src
     }
     console.log(dataBlog);
     axios.put("/api/admin/blogs/" + idBlogAdmin, dataBlog)

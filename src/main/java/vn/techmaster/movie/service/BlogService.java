@@ -11,7 +11,6 @@ import vn.techmaster.movie.entity.Blog;
 import vn.techmaster.movie.entity.User;
 import vn.techmaster.movie.exception.ResourceNotFoundException;
 import vn.techmaster.movie.model.request.UpsertBlogRequest;
-import vn.techmaster.movie.model.request.UpsertReviewRequest;
 import vn.techmaster.movie.repository.BlogRepository;
 
 import java.util.Date;
@@ -102,6 +101,7 @@ public class BlogService {
         blog.setUpdatedAt(new Date());
         blog.setPublishedAt(publishedAt);
         blog.setSlug(slugify.slugify(upsertBlogRequest.getTitle()));
+        blog.setThumbnail(upsertBlogRequest.getThumbnail());
 
         return blogRepository.save(blog);
     }
