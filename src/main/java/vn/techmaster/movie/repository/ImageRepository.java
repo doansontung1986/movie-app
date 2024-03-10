@@ -10,5 +10,5 @@ import java.util.List;
 public interface ImageRepository extends JpaRepository<Image, String> {
     List<Image> findByUser_IdOrderByCreatedAt(Integer id);
 
-    Page<Image> findByUser_IdOrderByCreatedAt(Integer id, Pageable pageable);
+    Page<Image> findByUser_IdOrderByCreatedAtDesc(Integer id, Pageable pageable);
 }

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,10 +51,11 @@ public class ImageService {
         return imageRepository.findByUser_IdOrderByCreatedAt(user.getId());
     }
 
-    public Page<Image> getAllImagesByCurrentUser(Integer page, Integer size) {
+    public Page<Image> getAllImagesByCurrentUser(Integer page, Integer limit) {
         User user = (User) session.getAttribute("currentUser");
-        PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("createdAt").descending());
-        return imageRepository.findByUser_IdOrderByCreatedAt(user.getId(), pageRequest);
+
+        Pageable pageable = PageRequest.of(page - 1, limit, Sort.by("createdAt").descending());
+        return imageRepository.findByUser_IdOrderByCreatedAtDesc(user.getId(), pageable);
     }
 
     public Image uploadImage(MultipartFile file) {

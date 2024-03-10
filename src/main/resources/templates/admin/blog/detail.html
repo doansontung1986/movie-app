@@ -169,26 +169,8 @@
                     </div>
 
                     <!-- Hiển thị phần phân trang -->
-                    <div class="pagination-container d-flex justify-content-center" th:if="${pageData.getTotalPages() > 1}">
-                        <nav aria-label="...">
-                            <ul class="pagination">
-                                <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
-                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${currentPage - 1})}">Previous</a>
-                                </li>
+                    <div class="pagination-container d-flex justify-content-center">
 
-                                <li class="page-item"
-                                    th:each="pageNumber : ${#numbers.sequence(1, pageData.getTotalPages())}"
-                                    th:classappend="${pageNumber == currentPage ? 'active' : ''}">
-                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${pageNumber})}"
-                                       th:text="${pageNumber}"></a>
-                                </li>
-
-                                <li class="page-item"
-                                    th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
-                                    <a class="page-link" th:href="@{/{id}/detail-blog (id=${blogAdminDetail.id}, page=${currentPage + 1})}">Next</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -226,99 +208,99 @@
             },
         });
 
-        // Quản lý ảnh
-        const imageContainerEl = document.querySelector('.image-container');
-        const btnChoseImage = document.getElementById('btn-chose-image');
-        const btnDeleteImage = document.getElementById('btn-delete-image');
-        const inputImageEl = document.getElementById('avatar');
-        const thumbnailPreviewEl = document.getElementById('thumbnail');
-
-        // Hiển thị danh sách ảnh
-        const renderImages = images => {
-            let html = "";
-
-            images.forEach(image => {
-                html += `
-                <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
-                    <img src="${image.url}" alt="">
-                </div>
-            `;
-            });
-            imageContainerEl.innerHTML = html;
-        };
-
-        // Upload ảnh
-        inputImageEl.addEventListener("change", (e) => {
-            // Lấy ra thông tin của file upload
-            const file = e.target.files[0];
-
-            // Tạo đối tượng formData
-            const formData = new FormData();
-            formData.append("file", file);
-
-            // Call api sử dụng axios
-            axios.post("/api/admin/images", formData)
-                .then(res => {
-                    imageList.unshift(res.data);
-                    renderImages(imageList);
-                })
-                .catch(err => {
-                    console.log(err);
-                    toastr.error(err.response.data.message);
-                })
-        })
-
-        const choseImage = el => {
-            const selectedEl = document.querySelector(".image-item.selected");
-            if (selectedEl) {
-                selectedEl.classList.remove("selected");
-            }
-
-            el.classList.add("selected");
-            btnChoseImage.disabled = false;
-            btnDeleteImage.disabled = false;
-        }
-
-        // Chọn ảnh
-        btnChoseImage.addEventListener("click", () => {
-            const selectedEl = document.querySelector(".image-item.selected");
-            if (!selectedEl) {
-                toastr.warning("Vui lòng chọn ảnh");
-                return;
-            }
-
-            const imageUrl = selectedEl.querySelector("img").getAttribute("src");
-            thumbnailPreviewEl.src = imageUrl;
-
-            $('#modal-image').modal('hide');
-        })
-
-        // Xóa ảnh
-        btnDeleteImage.addEventListener("click", () => {
-            const selectedEl = document.querySelector(".image-item.selected");
-            if (!selectedEl) {
-                toastr.warning("Vui lòng chọn ảnh cần xóa");
-                return;
-            }
-
-            const imageId = selectedEl.dataset.id;
-            axios.delete(`/api/admin/images/${imageId}`)
-                .then(res => {
-                    imageList = imageList.filter(image => image.id !== imageId);
-                    renderImages(imageList);
-
-                    btnChoseImage.disabled = true;
-                    btnDeleteImage.disabled = true;
-
-                    toastr.success("Xoá ảnh thành công");
-                })
-                .catch(err => {
-                    console.log(err);
-                    toastr.error(err.response.data.message);
-                })
-        })
-
-        renderImages(imageList);
+        // // Quản lý ảnh
+        // const imageContainerEl = document.querySelector('.image-container');
+        // const btnChoseImage = document.getElementById('btn-chose-image');
+        // const btnDeleteImage = document.getElementById('btn-delete-image');
+        // const inputImageEl = document.getElementById('avatar');
+        // const thumbnailPreviewEl = document.getElementById('thumbnail');
+        //
+        // // Hiển thị danh sách ảnh
+        // const renderImages = images => {
+        //     let html = "";
+        //
+        //     images.forEach(image => {
+        //         html += `
+        //         <div class="image-item" onclick="choseImage(this)" data-id="${image.id}">
+        //             <img src="${image.url}" alt="">
+        //         </div>
+        //     `;
+        //     });
+        //     imageContainerEl.innerHTML = html;
+        // };
+        //
+        // // Upload ảnh
+        // inputImageEl.addEventListener("change", (e) => {
+        //     // Lấy ra thông tin của file upload
+        //     const file = e.target.files[0];
+        //
+        //     // Tạo đối tượng formData
+        //     const formData = new FormData();
+        //     formData.append("file", file);
+        //
+        //     // Call api sử dụng axios
+        //     axios.post("/api/admin/images", formData)
+        //         .then(res => {
+        //             imageList.unshift(res.data);
+        //             renderImages(imageList);
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //             toastr.error(err.response.data.message);
+        //         })
+        // })
+        //
+        // const choseImage = el => {
+        //     const selectedEl = document.querySelector(".image-item.selected");
+        //     if (selectedEl) {
+        //         selectedEl.classList.remove("selected");
+        //     }
+        //
+        //     el.classList.add("selected");
+        //     btnChoseImage.disabled = false;
+        //     btnDeleteImage.disabled = false;
+        // }
+        //
+        // // Chọn ảnh
+        // btnChoseImage.addEventListener("click", () => {
+        //     const selectedEl = document.querySelector(".image-item.selected");
+        //     if (!selectedEl) {
+        //         toastr.warning("Vui lòng chọn ảnh");
+        //         return;
+        //     }
+        //
+        //     const imageUrl = selectedEl.querySelector("img").getAttribute("src");
+        //     thumbnailPreviewEl.src = imageUrl;
+        //
+        //     $('#modal-image').modal('hide');
+        // })
+        //
+        // // Xóa ảnh
+        // btnDeleteImage.addEventListener("click", () => {
+        //     const selectedEl = document.querySelector(".image-item.selected");
+        //     if (!selectedEl) {
+        //         toastr.warning("Vui lòng chọn ảnh cần xóa");
+        //         return;
+        //     }
+        //
+        //     const imageId = selectedEl.dataset.id;
+        //     axios.delete(`/api/admin/images/${imageId}`)
+        //         .then(res => {
+        //             imageList = imageList.filter(image => image.id !== imageId);
+        //             renderImages(imageList);
+        //
+        //             btnChoseImage.disabled = true;
+        //             btnDeleteImage.disabled = true;
+        //
+        //             toastr.success("Xoá ảnh thành công");
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //             toastr.error(err.response.data.message);
+        //         })
+        // })
+        //
+        // renderImages(imageList);
     </script>
 
     <script th:src="@{/admin-assets/dist/js/admin-message.js}"></script>

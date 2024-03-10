@@ -2,117 +2,94 @@ let currentPage = 1;
 let images = [];
 let totalPages = null;
 
-let titleEl = document.getElementById("title");
-let descriptionEl = document.getElementById("description");
-let contentEl = document.getElementById("content");
-let statusBlogEl = document.getElementById("status");
-const updateBlog = document.getElementById("update");
-const deleteBlog = document.getElementById("deleteBlog");
+const titleEl = document.getElementById('title');
+const descriptionEl = document.getElementById('description');
+const relishedYearEl = document.getElementById("releaseYear");
+const statusEl = document.getElementById("status")
+const btnSave = document.getElementById("btn-create");
 const thumbnailPreviewEl = document.getElementById('thumbnail');
+const movieTypeEl = document.getElementById("type");
 
-// Render blog data
-const renderBlog = () => {
-    // console.log(currentBlog)
-    titleEl.value = currentBlog.title;
-    descriptionEl.value = currentBlog.description;
-    easyMDE.value(currentBlog.content);
-    contentEl.value = currentBlog.content;
-    thumbnailPreviewEl.setAttribute("src", currentBlog.thumbnail) ;
-}
-
-// lắng nghe sự kiện của easyMDE
-easyMDE.codemirror.on('change', function () {
-    contentEl.value = easyMDE.value();
-});
-let idBlogAdmin = currentBlog.id;
-
-updateBlog.addEventListener('click', (e) => {
+btnSave.addEventListener('click', (e) => {
     e.preventDefault();
-    if (!$("#form-blog-detail").valid()) return;
-    if (contentEl.value === '') {
-        alert("Vui lòng nhập nội dung");
-        return;
-    }
+    if (!$('#form-create-movie').valid()) return;
     let status = false;
-    if (statusBlogEl.value === "1") {
+    if (statusEl.getAttribute("value") === "true") {
         status = true;
     }
-    const dataBlog = {
+    let directorValue = $('#director').val();
+    let actorValue = $('#actor').val();
+    let genreValue = $('#genre').val();
+    let directorList = directorValue.map(dir => parseInt(dir));
+    let actorList = actorValue.map(dir => parseInt(dir));
+    let genreList = genreValue.map(dir => parseInt(dir));
+    const data = {
         title: titleEl.value,
-        description: titleEl.value,
-        content: contentEl.value,
+        description: descriptionEl.value,
+        type: movieTypeEl.value,
+        releaseYear: relishedYearEl.value,
         status: status,
-        thumbnail: thumbnailPreviewEl.getAttribute('src') === "" ? null : thumbnailPreviewEl.getAttribute('src')
+        directorIds: directorList,
+        actorIds: actorList,
+        genreIds: genreList,
+        poster: thumbnailPreviewEl.getAttribute("src")
     }
-    console.log(dataBlog);
-    axios.put("/api/admin/blogs/" + idBlogAdmin, dataBlog)
+    console.log(data);
+    axios.post("/api/admin/movies", data)
         .then((res) => {
             toastr.success("Lưu thành công ");
             setTimeout(() => {
-                window.location.href = "/admin/blogs/own-blogs";
-            }, 1000);
+                window.location.href = "/admin/movies";
+            }, 1500);
         })
-        .catch((err) => {
-            toastr.error(err.response.data.message);
+        .catch(() => {
+            toastr.error("Lưu thất bại ");
         })
-
 })
-
-$('#form-blog-detail').validate({
+$('#form-create-movie').validate({
     rules: {
         title: {
             required: true,
-        },
-        content: {
+        }, director: {
             required: true,
-        },
-        description: {
+        }, description: {
             required: true
-        },
-    },
-    messages: {
-        title: {
-            required: "Vui lòng nhập tiêu đề blog",
-
-        },
-        content: {
-            required: "Vui lòng nhập nội dung của blog",
-
-        },
-        description: {
-            required: "Vui lòng nhập mô tả cho blog"
+        }, actor: {
+            required: true
+        }, genre: {
+            required: true
+        }, relishedAt: {
+            required: true
+        }, thumbnail: {
+            required: true
         }
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
+    }, messages: {
+        title: {
+            required: "Vui lòng nhập tiêu đề phim",
+
+        }, director: {
+            required: "Vui lòng nhập đạo diễn bộ phim",
+
+        }, description: {
+            required: "Vui lòng nhập mô tả cho phim"
+        }, actor: {
+            required: "Vui lòng nhập diễn viên"
+        }, genre: {
+            required: "Vui lòng nhập thể loại "
+        }, relishedAt: {
+            required: "Vui lòng nhập năm sản xuất"
+        }, thumbnail: {
+            required: "Vui lòng chọn hình ảnh"
+        }
+    }, errorElement: 'span', errorPlacement: function (error, element) {
         error.addClass('invalid-feedback');
         element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
+    }, highlight: function (element, errorClass, validClass) {
         $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
+    }, unhighlight: function (element, errorClass, validClass) {
         $(element).removeClass('is-invalid');
     }
 });
-
-deleteBlog.addEventListener('click', () => {
-    const isConfirm = confirm("Bạn có chắc mình muốn xóa blog này không?");
-    if (!isConfirm) return;
-    axios.delete("/api/admin/blogs/" + idBlogAdmin)
-        .then((res) => {
-            toastr.success("Xóa Thành Công ");
-            setTimeout(() => {
-                window.location.href = "/admin/blogs/own-blogs";
-            }, 1000);
-        })
-        .catch((err) => {
-            toastr.error(err.response.data.message);
-        })
-
-});
-
-renderBlog();
 
 // Gọi api lấy danh sách image
 const getImages = (page) => {
@@ -271,3 +248,37 @@ btnDeleteImage.addEventListener("click", async () => {
 })
 
 getImages(currentPage);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
