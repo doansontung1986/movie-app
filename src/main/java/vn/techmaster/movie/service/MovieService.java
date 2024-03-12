@@ -53,6 +53,11 @@ public class MovieService {
         return movieRepository.findByIdAndSlugAndStatus(id, slug, status).orElse(null);
     }
 
+    public Movie getMovie(Integer id) {
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy phim với id = " + id));
+    }
+
     public List<Movie> getRelatedMovies(Integer id, MovieType movieType, Boolean status, Integer size) {
         return movieRepository.findByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(movieType, status, 5.0, id).stream().limit(size).toList();
     }
@@ -77,12 +82,12 @@ public class MovieService {
     public Movie updateMovie(Integer id, UpsertMovieRequest upsertMovieRequest) {
         // tìm kiếm phim theo id
         Movie movie = movieRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Cannot find Movie by Id : " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Cannot find Movie by Id : " + id));
         Slugify slugify = Slugify.builder().build();
         Boolean status = upsertMovieRequest.getStatus();
         Date publishedAt = null;
-        if (status){
-            publishedAt=new Date();
+        if (status) {
+            publishedAt = new Date();
         }
         List<Actor> actorList = actorRepository.findAllById(upsertMovieRequest.getActorIds());
         List<Director> directorList = directorRepository.findAllById(upsertMovieRequest.getDirectorIds());
@@ -104,11 +109,11 @@ public class MovieService {
     }
 
     public void deleteMovie(Integer id) {
-        Movie movie = movieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Cannot find by id :" + id));
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find by id :" + id));
         movieRepository.delete(movie);
     }
 
     public Movie findMovieById(Integer id) {
-        return movieRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Cannot find by id :" + id));
+        return movieRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cannot find by id :" + id));
     }
 }

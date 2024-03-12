@@ -10,6 +10,7 @@ import vn.techmaster.movie.model.enums.MovieType;
 import vn.techmaster.movie.repository.ActorRepository;
 import vn.techmaster.movie.repository.DirectorRepository;
 import vn.techmaster.movie.repository.GenreRepository;
+import vn.techmaster.movie.service.EpisodeService;
 import vn.techmaster.movie.service.ImageService;
 import vn.techmaster.movie.service.MovieService;
 
@@ -22,6 +23,7 @@ public class MovieController {
     private final DirectorRepository directorRepository;
     private final ActorRepository actorRepository;
     private final GenreRepository genreRepository;
+    private final EpisodeService episodeService;
 
     @GetMapping
     public String viewHomePage(Model model) {
@@ -41,12 +43,13 @@ public class MovieController {
 
     @GetMapping("/{id}/detail")
     public String viewDetailPage(@PathVariable Integer id, Model model) {
-        model.addAttribute("movie", movieService.findMovieById(id));
+        model.addAttribute("movie", movieService.getMovie(id));
+        model.addAttribute("images", imageService.getAllImagesByCurrentUser());
         model.addAttribute("directors", directorRepository.findAll());
         model.addAttribute("actors", actorRepository.findAll());
         model.addAttribute("genres", genreRepository.findAll());
         model.addAttribute("movieTypes", MovieType.values());
-        model.addAttribute("images", imageService.getAllImagesByCurrentUser());
+        model.addAttribute("episodes", episodeService.getEpisodeListOfMovie(id));
         return "admin/movie/detail";
     }
 }

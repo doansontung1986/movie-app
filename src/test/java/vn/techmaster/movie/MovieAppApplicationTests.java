@@ -87,4 +87,13 @@ class MovieAppApplicationTests {
             userRepository.save(user);
         });
     }
+
+    @Test
+    void save_episodes() {
+        // Lấy danh sách phim
+        // Duyệt qua từng phim -> Kiểm tra type phim
+        // Nếu type = PHIM_BO -> Tạo ra 5 -> 10 tập phim tương ứng
+        // Nếu type = PHIM_LE hoặc PHIM_CHIEU_RAP -> Tạo ra 1 tập phim tương ứng
+        // Chưa cần thông tin về videoUrl và duration (set null)
+    }
 }

@@ -7,12 +7,12 @@
 
     <th:block id="css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
               integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
-        <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css" />
+        <link rel="stylesheet" href="/admin-assets/plugins/select2/css/select2.min.css"/>
         <link rel="stylesheet" href="/admin-assets/dist/css/style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
               integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
@@ -102,13 +102,15 @@
 
                                         <div class="form-group">
                                             <label>Mô tả ngắn</label>
-                                            <textarea name="description" id="description" class="form-control" rows="6"></textarea>
+                                            <textarea name="description" id="description" class="form-control"
+                                                      rows="6"></textarea>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Đạo diễn</label>
                                             <div class="select2-purple">
-                                                <select name="director" class="select2 form-control" multiple="multiple" id="director">
+                                                <select name="director" class="select2 form-control" multiple="multiple"
+                                                        id="director">
                                                     <option th:each="director : ${directors}" th:value="${director.id}"
                                                             th:text="${director.name}"></option>
                                                 </select>
@@ -118,7 +120,8 @@
                                         <div class="form-group">
                                             <label>Diễn viên</label>
                                             <div class="select2-purple">
-                                                <select name="actor" class="select2 form-control" multiple="multiple" id="actor">
+                                                <select name="actor" class="select2 form-control" multiple="multiple"
+                                                        id="actor">
                                                     <option th:each="actor : ${actors}" th:value="${actor.id}"
                                                             th:text="${actor.name}"></option>
                                                 </select>
@@ -128,7 +131,8 @@
                                         <div class="form-group">
                                             <label>Thể loại</label>
                                             <div class="select2-purple">
-                                                <select name="genre" class="select2 form-control" multiple="multiple" id="genre">
+                                                <select name="genre" class="select2 form-control" multiple="multiple"
+                                                        id="genre">
                                                     <option th:each="genre : ${genres}" th:value="${genre.id}"
                                                             th:text="${genre.name}"></option>
                                                 </select>
@@ -156,16 +160,18 @@
 
                                         <div class="form-group">
                                             <label>Loại phim</label>
-                                            <select id="type"  class="form-control">
-                                                <option  th:each="type : ${movieTypes}" th:value="${type}"
-                                                         th:text="${type.getValue()}"   th:selected="${type == movie.type}"></option>
+                                            <select id="type" class="form-control">
+                                                <option th:each="type : ${movieTypes}" th:value="${type}"
+                                                        th:text="${type.getValue()}"
+                                                        th:selected="${type == movie.type}"></option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <div  class="thumbnail-preview-container mb-3">
-                                                <img src="" alt="" id="thumbnail" />
+                                            <div class="thumbnail-preview-container mb-3">
+                                                <img src="" alt="" id="thumbnail"/>
                                             </div>
-                                            <button name="thumbnail" type="button" class="btn btn-info btn-flat" data-toggle="modal"
+                                            <button name="thumbnail" type="button" class="btn btn-info btn-flat"
+                                                    data-toggle="modal"
                                                     data-target="#modal-image">
                                                 Chọn hình ảnh
                                             </button>
@@ -177,8 +183,78 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-3">Danh sách tập phim</h4>
+                            <table id="table-director" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th style="width: 20%">Tên tập phim</th>
+                                    <th style="width: 40%">Link</th>
+                                    <th style="width: 10%">Thời lượng</th>
+                                    <th style="width: 10%">Trạng thái</th>
+                                    <th style="width: 15%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="episode : ${episodes}">
+                                    <td th:text="${episode.displayOrder}">#</td>
+                                    <td th:text="${episode.title}">Tên tập phim</td>
+                                    <td th:text="${episode.videoUrl}">Link</td>
+                                    <td th:text="${episode.duration}">Thời lượng</td>
+                                    <td th:text="${episode.status ? 'Công khai' : 'Nháp'}">Trạng thái</td>
+                                    <td>
+                                        <label th:for="|episode-input-${episode.id}|"
+                                               class="btn btn-primary btn-sm mb-0"><i
+                                                class="fas fa-upload"></i></label>
+                                        <input type="file" class="d-none" th:id="|episode-input-${episode.id}|"
+                                               th:onchange="|uploadVideo(event, ${episode.id})|">
+
+                                        <button class="btn btn-warning btn-sm text-white"
+                                                th:onclick="|previewVideo(${episode.id})|">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                        <button class="btn btn-success btn-sm"
+                                                th:onclick="|deleteEpisode(${episode.id})|"><i class="fas fa-pencil-alt"
+                                        ></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm"
+                                                th:onclick="|deleteEpisode(${episode.id})|"><i class="fas fa-trash-alt"
+                                        ></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
+    <div class="modal fade" id="modal-preview-video">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Video Preview</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video width="100%" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="modal-image" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -226,13 +302,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
             integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
-             integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
-             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+            integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
             integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script >
+    <script>
         $(".select2").select2();
     </script>
     <script th:inline="javascript">
@@ -241,8 +318,71 @@
     </script>
     <script th:src="@{/admin-assets/dist/js/admin-message.js}"></script>
 
-    <script th:src="@{/admin-assets/dist/js/admin-movie/admin-movie-detail.js}"></script>
+    <script th:src="@{/admin-assets/dist/js/admin-movie/admin-episode-detail.js}"></script>
 
+    <script th:inline="javascript">
+        $(".select2").select2();
+
+        const episodeList = [[${episodes}]];
+
+        // Xem trước video
+        const previewVideo = (episodeId) => {
+            // Tìm kiếm tập phim theo id
+            const episode = episodeList.find(e => e.id === episodeId)
+
+            // Lấy ra thẻ video và gán src cho nó
+            const videoEl = document.querySelector('#modal-preview-video video')
+            videoEl.src = episode.videoUrl
+
+            // Hiển thị modal
+            $('#modal-preview-video').modal('show')
+        }
+
+        // Nếu đóng modal preview video thì reset lại src của video
+        $('#modal-preview-video').on('hidden.bs.modal', function (event) {
+            const videoEl = document.querySelector('#modal-preview-video video')
+            videoEl.src = "";
+        })
+
+        // Upload video cho tập phim
+        const uploadVideo = (event, episodeId) => {
+            // Lấy ra file vừa được chọn
+            const file = event.target.files[0]
+
+            // Tạo đối tượng form data để đưa dữ liệu vào gửi đi
+            const formData = new FormData()
+            formData.append('file', file)
+
+            // Gọi api sử dung axios
+            axios.post(`/api/admin/episodes/${episodeId}/upload-video`, formData)
+                .then(res => {
+                    toastr.success('Upload video thành công.')
+
+                    // Reload lại trang sau 1.5s
+                    setTimeout(() => {
+                        location.reload()
+                    }, 1500)
+                })
+                .catch(err => {
+                    console.log(err)
+                    toastr.error(err.response.data.message)
+                })
+        }
+
+        const deleteEpisode = (episodeId) => {
+            axios.delete(`/api/admin/episodes/${episodeId}`)
+                .then(res => {
+                        toastr.success("Xoá tập phim thành công");
+                    }, 1500
+                )
+                .catch(err => {
+                    console.log(err);
+                    toastr.error(err.response.data.message);
+                });
+
+
+        }
+    </script>
 </th:block>
 </body>
 

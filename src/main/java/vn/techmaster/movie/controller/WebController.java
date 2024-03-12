@@ -7,9 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import vn.techmaster.movie.entity.Episode;
 import vn.techmaster.movie.entity.Movie;
 import vn.techmaster.movie.entity.Review;
 import vn.techmaster.movie.model.enums.MovieType;
+import vn.techmaster.movie.service.EpisodeService;
 import vn.techmaster.movie.service.MovieService;
 import vn.techmaster.movie.service.ReviewService;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class WebController {
     private final MovieService movieService;
     private final ReviewService reviewService;
+    private final EpisodeService episodeService;
 
     @GetMapping("/")
     public String getHome(Model model) {
@@ -39,9 +42,7 @@ public class WebController {
     // /phim-chieu-rap?page=1&size=12 -> page = 1, size = 12
     // /phim-chieu-rap -> page = 1, size = 12
     @GetMapping("/phim-le")
-    public String getSingleMovies(Model model,
-                                  @RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "20") Integer size) {
+    public String getSingleMovies(Model model, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "20") Integer size) {
         Page<Movie> pageData = movieService.getMoviesByType(MovieType.PHIM_LE, true, page, size);
 
         model.addAttribute("singleMovieList", pageData.getContent());
@@ -51,9 +52,7 @@ public class WebController {
     }
 
     @GetMapping("/phim-bo")
-    public String getSeriesMovies(Model model,
-                                  @RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "20") Integer size) {
+    public String getSeriesMovies(Model model, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "20") Integer size) {
         Page<Movie> pageData = movieService.getMoviesByType(MovieType.PHIM_BO, true, page, size);
 
         model.addAttribute("seriesMovieList", pageData.getContent());
@@ -63,9 +62,7 @@ public class WebController {
     }
 
     @GetMapping("/phim-chieu-rap")
-    public String getCinemaMovies(Model model,
-                                  @RequestParam(required = false, defaultValue = "1") Integer page,
-                                  @RequestParam(required = false, defaultValue = "20") Integer size) {
+    public String getCinemaMovies(Model model, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "20") Integer size) {
         Page<Movie> pageData = movieService.getMoviesByType(MovieType.PHIM_CHIEU_RAP, true, page, size);
 
         model.addAttribute("cinemaMovieList", pageData.getContent());
@@ -79,11 +76,30 @@ public class WebController {
         Movie movie = movieService.getMovie(id, slug, true);
         List<Movie> relatedMovieList = movieService.getRelatedMovies(id, movie.getType(), true, 6);
         List<Review> reviewList = reviewService.getReviewsByMovie(id);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id, true);
 
         model.addAttribute("movie", movie);
         model.addAttribute("relatedMovieList", relatedMovieList);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("episodes", episodes);
         return "web/chi-tiet-phim";
+    }
+
+    // Xem phim
+    @GetMapping("/xem-phim/{id}/{slug}")
+    public String getXemPhimPage(Model model, @PathVariable Integer id, @PathVariable String slug, @RequestParam String tap) {
+        Movie movie = movieService.getMovie(id, slug, true);
+        List<Movie> relatedMovieList = movieService.getRelatedMovies(id, movie.getType(), true, 6);
+        List<Review> reviewList = reviewService.getReviewsByMovie(id);
+        List<Episode> episodes = episodeService.getEpisodeListOfMovie(id, true);
+        Episode currentEpisode = episodeService.getEpisode(id, tap, true);
+
+        model.addAttribute("movie", movie);
+        model.addAttribute("relatedMovieList", relatedMovieList);
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("episodes", episodes);
+        model.addAttribute("currentEpisode", currentEpisode);
+        return "web/xem-phim";
     }
 
     @GetMapping("/dang-nhap")
