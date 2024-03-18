@@ -1,5 +1,6 @@
 package vn.techmaster.movie.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,7 @@ public class Genre {
     @Column(nullable = false, unique = true)
     String name;
 
-    @Column(nullable = false, unique = true)
+    @JsonIgnore
+    @Column(nullable = true, unique = false)
     String slug;
 }
